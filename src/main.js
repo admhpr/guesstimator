@@ -1,11 +1,12 @@
 import Vue from "vue/dist/vue.esm.js";
+
+import Timer from "./tab/Timer.vue";
 import App from "./App.vue";
 
 import Bulma from "bulma";
 import BulmaExt from "bulma-extensions";
 import Scss from "./styles/app.scss";
 
-import Timer from "./tab/Timer.vue";
 
 Vue.component('timer', Timer);
 
@@ -26,3 +27,5 @@ var vm = new Vue({
   data: {
   }
 });
+
+window.vm = vm;

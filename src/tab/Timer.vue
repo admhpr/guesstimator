@@ -59,6 +59,21 @@ export default {
                 // Remove interval
                 clearInterval(interval);
             }
+        },
+        deadline(){
+            this.$emit('dateChanged');
+            clearInterval(interval);
+            this.startTimer();
+        }
+    },
+    methods: {
+        startTimer(){
+            console.log('started');
+            console.log(this.deadline);
+            this.date = Math.trunc(Date.parse(this.deadline.replace(/-/g, "/")) / 1000)
+            interval = setInterval(() => {
+            this.now = Math.trunc((new Date()).getTime() / 1000)
+            }, 1000);
         }
     }
 }

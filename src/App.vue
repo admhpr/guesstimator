@@ -1,6 +1,9 @@
 <template>
   <div id="home">
-
+    <label for="selectedDate">
+          Current Deadline: 
+          <span>{{ selectedDate }}</span>
+    </label>
     <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
       <ul>
         <li><a href="#"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
@@ -11,8 +14,7 @@
     <!-- date picker input -->
     <div class="field has-addons has-addons-centered">
       <div class="control">
-        <input id="datepicker" :value="selectedDate" class="input" type="text">
-        {{ selectedDate }}
+        <input id="datepicker" :text="selectedDate" class="input" type="text">
       </div>
       <div class="control">
         <a class="button is-success" @click="setDate">Set</a>
@@ -51,16 +53,18 @@ export default {
   ],
   data() {
     return {
-      selectedDate: '',
-      deadline: 0,
+      selectedDate: 'None Set',
+      deadline: '0',
       msg: "If these letters are green Webpack is working",
       sass: "and Sass is working"
     };
   },
   methods: {
     setDate(){
-      let dateValue = document.getElementById('datepicker').value;
-      this.deadline = dateValue;
+      console.log(this);
+      let dateInput = document.getElementById('datepicker');
+      this.selectedDate = dateInput.value;
+      this.deadline = this.selectedDate;
     }
   },
   mounted(){
