@@ -7,7 +7,7 @@
     <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
       <ul>
         <li><a href="options.html"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
-        <li><a href="tab.html"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
+        <li><a href="#"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
       </ul>
     </nav>
 

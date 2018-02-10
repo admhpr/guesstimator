@@ -10,6 +10,7 @@
     "default_option": "./pages/options.html",
     "default_title": "Stay on track."
   },
-  "permissions": ["activeTab", "http://*/", "storage"],
+  "background": { "scripts": [ "./js/background.build.js" ] },
+  "permissions": ["activeTab", "http://*/", "storage", "tabs"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
