@@ -6,8 +6,8 @@
     </label>
     <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
       <ul>
-        <li><a href="#"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
-        <li><a href="#"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
+        <li><a href="options.html"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
+        <li><a href="tab.html"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
       </ul>
     </nav>
 
@@ -43,20 +43,18 @@
 </template>
 
 <script>
-import Timer from "./tab/Timer.vue";
+import Timer from "./Timer.vue";
 import DatePicker from "bulma-extensions/bulma-calendar/datepicker.js"
 export default {
   props: [],
-  name: "App",
+  name: "Tab",
   components: [
     Timer
   ],
   data() {
     return {
       selectedDate: 'None Set',
-      deadline: '0',
-      msg: "If these letters are green Webpack is working",
-      sass: "and Sass is working"
+      deadline: '0'
     };
   },
   methods: {

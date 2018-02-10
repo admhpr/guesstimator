@@ -2,11 +2,15 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-  entry: "./src/main.js",
+  entry: {
+    popup: "./src/popup/main.js",
+    options: "./src/options/main.js",
+    tab: "./src/tab/main.js"
+  },
   output: {
-    path: path.resolve(__dirname, "./dist"),
-    publicPath: "/dist/",
-    filename: "build.js"
+    path: path.resolve(__dirname, "./dist/js"),
+    publicPath: "/dist/js/",
+    filename: "[name].build.js"
   },
   module: {
     rules: [
