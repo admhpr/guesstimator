@@ -7,7 +7,7 @@
     <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
       <ul>
         <li><a href="options.html"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
-        <li><a href="#"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
+        <li @click="openDashboard" ><a href="#"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
       </ul>
     </nav>
 
@@ -44,6 +44,7 @@
 
 <script>
 import Timer from "./Timer.vue";
+import Background from "../background.js"
 import DatePicker from "bulma-extensions/bulma-calendar/datepicker.js"
 export default {
   props: [],
@@ -59,10 +60,13 @@ export default {
   },
   methods: {
     setDate(){
-      console.log(this);
       let dateInput = document.getElementById('datepicker');
       this.selectedDate = dateInput.value;
       this.deadline = this.selectedDate;
+    },
+    openDashboard(){
+      let bg = new Background();
+      bg.openNewTab("./pages/options.html");  
     }
   },
   mounted(){

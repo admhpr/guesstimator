@@ -1,11 +1,7 @@
-const Background = {
-  openNewTab() {
-    chrome.browserAction.onClicked.addListener(function(newUrl) {
-      chrome.tabs.create({ url: newURL });
-    });
+function Background(){
+  this.openNewTab = function (newUrl){
+      chrome.tabs.create({ url: newUrl });
   }
 };
 
 export default Background;
-
-console.log("here");
