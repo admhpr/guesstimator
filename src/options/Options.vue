@@ -40,7 +40,7 @@
           <div class="level">
             <div class="level-left">
               <div class="level-item">
-                <div class="title has-text-primary"><i class="fa fa-tachometer"></i> Dashboard</div>
+                <div class="title has-text-primary"><i class="fa fa-tachometer"></i><span id="title">Dashboard</span></div>
               </div>
             </div>
             <div class="level-right">
@@ -56,12 +56,13 @@
 
           <tabs>
             <tab name="Overview" :selected="true">
+              <div class="columns is-multiline">
                 <div class="column is-6">
                   <div class="panel">
                     <p class="panel-heading">
                         Chart - Bar Style (Chart.js)
                       </p>
-                    <line-chart></line-chart>
+                      <line-chart></line-chart>
                   </div>
                 </div>
                 <div class="column is-6">
@@ -69,9 +70,10 @@
                     <p class="panel-heading">
                         Chart - Bar Style (Chart.js)
                       </p>
-                     <bar-chart></bar-chart>
+                      <bar-chart></bar-chart>  
                   </div>
                 </div>
+              </div>
             </tab>
             <tab name="Insights"></tab>
             <tab name="Settings"></tab>
@@ -94,6 +96,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../styles/app.scss';
 $light : hsl(0, 0%, 85%);
 .vue {
   color: #000;
@@ -106,6 +109,10 @@ $light : hsl(0, 0%, 85%);
 }
 main{
     border-left: solid 1px $light;
+}
+
+#title{
+  color: lighten($green, 10);
 }
 
 </style>

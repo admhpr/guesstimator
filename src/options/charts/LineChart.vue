@@ -9,7 +9,7 @@
                 datasets: [
                     {
                     label: 'GitHub Commits',
-                    backgroundColor: '#f87979',
+                    borderColor: '#5B105B',
                     data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
                     }
                 ]
