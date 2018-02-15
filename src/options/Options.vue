@@ -104,9 +104,6 @@ $light : hsl(0, 0%, 85%);
   text-align: center;
 }
 
-.columns{
-  padding: 2em;
-}
 main{
     border-left: solid 1px $light;
 }
