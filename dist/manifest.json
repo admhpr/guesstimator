@@ -4,12 +4,13 @@
   "version": "1.0",
   "manifest_version": 2,
   "browser_action": {
-    "default_icon": "./images/icon.png", 
+    "default_icon": "./assets/icon.png", 
     "default_popup": "./pages/popup.html",
     "default_tab": "./pages/tab.html",
     "default_option": "./pages/options.html",
     "default_title": "Stay on track."
   },
-  "permissions": ["activeTab", "http://*/", "storage"],
+  "background": { "scripts": [ "./js/background.build.js" ] },
+  "permissions": ["activeTab", "http://*/", "storage", "tabs"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
