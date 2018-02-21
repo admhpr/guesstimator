@@ -1,14 +1,19 @@
 <template>
   <div id="home">
-    <div v-if="loggedIn">
-      <label for="selectedDate">
-            Current Deadline: 
-            <span>{{ selectedDate }}</span>
+    <div v-show="loggedIn">
+      <label for="selectedDate" >
+        <span class="has-text-info">
+          Current Deadline: 
+          {{ selectedDate }}
+        </span>
+        <span class="icon has-text-info">
+          <i class="fas fa-info-circle"></i>
+        </span>
       </label>
       <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
         <ul>
-          <li><a href="options.html"><span class="icon is-small"><i class="fas fa-puzzle-piece"></i></span><span>Settings</span></a></li>
-          <li @click="openDashboard" ><a href="#"><span class="icon is-small"><i class="fas fa-book"></i></span><span>Dashboard</span></a></li>
+          <li><a href="options.html"><span class="icon is-small"><i class="fa fa-cog"></i></span><span>Settings</span></a></li>
+          <li @click="openDashboard" ><a href="#"><span class="icon is-small"><i class="fa fa-chart-bar"></i></span><span>Dashboard</span></a></li>
         </ul>
       </nav>
 
@@ -18,7 +23,7 @@
           <input id="datepicker" :text="selectedDate" class="input" type="text">
         </div>
         <div class="control">
-          <a class="button is-success" @click="setDate">Set</a>
+          <a class="button is-outlined is-success" @click="setDate">Set</a>
         </div>
       </div>
       <!-- end -->
@@ -29,29 +34,62 @@
 
       <div class="field is-grouped is-grouped-centered">
         <p class="control">
-          <button class="button is-danger">
+          <a @click="logout" class="button is-link is-outlined">Logout</a>
+          <button class="button is-danger is-outlined">
               Stop Timer
           </button>
-          <button class="button is-success">
+          <button class="button is-success is-outlined">
               Start Timer
           </button>
         </p>
       </div>
 
-      <div class="bottom-buffer"></div>
+      <div class="bottom-buffer">
+      </div>
 
     </div> <!-- end if logged in-->
 
-    <div v-else>
-      <div class="field  has-addons has-addons-centered">
-        <p class="control has-icons-left">
-          <input class="input is-info" type="text" placeholder="Info input">
-          <span class="icon is-small is-left">
-          <i class="fa fa-lock"></i>
-          </span>
-        </p>
+    <div v-show="!loggedIn">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            Guesstimator
+          </p>
+          <a href="#" class="card-header-icon" aria-label="more options">
+            <span class="icon">
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </a>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            <div class="field  has-addons has-addons-centered">
+              <p :class="{'control' : true, 'has-icons-left' : true, 'is-loading' : inputIsLoading}">
+                <input v-model="baseUrl" :class="{ 'input' : true, 'is-info' : !inputHasError, 'is-danger' : inputHasError }" type="text" placeholder="Info input">
+                <span class="icon is-small is-left">
+                <i class="fa fa-random"></i>
+                </span>
+              </p>
+              <div class="control">
+                <a class="button is-info" @click="checkCredentials">Set</a>
+              </div>
+            </div>
+            <div v-show="inputHasError">
+              <p class="help is-danger">Please make sure you are logged in to Jira and the url is correct</p>
+              <a @click="openJiraLogin" class="button is-medium is-link">
+                <span class="icon">
+                  <i class="fa fa-object-group"></i>
+                </span>
+                <span>Jira</span>
+              </a>
+            </div>      
+          </div>
+        </div>
+        <footer class="card-footer">
+
+        </footer>
       </div>
-    </div>
+    </div> <!-- end else logged in -->
 
   </div>
 </template>
@@ -72,9 +110,12 @@ export default {
     return {
       selectedDate: 'None Set',
       deadline: '0',
-      loggedIn: false,
+      loggedIn: window.localStorage.getItem('loggedIn'),
       baseUrl: '',
+      inputIsLoading: false,
+      inputHasError: false,
       bg: new Background()
+
     };
   },
   methods: {
@@ -84,31 +125,47 @@ export default {
       this.deadline = this.selectedDate;
     },
     openDashboard(){
-      bg.openNewTab("./pages/options.html");  
+      this.bg.openNewTab("./pages/options.html");  
+    },
+    openJiraLogin(){
+      this.bg.openNewTab("https://id.atlassian.com/login");  
     },
     checkCredentials(){
+        this.inputIsLoading = true;
         axios
         .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/configuration`)
         .then((res) => {
+          console.log(res);
           if(res.status === 200){
             console.log(res)
-            this.loggedIn = true;
+            setTimeout(()=>{
+              this.bg.setLocalStorage('loggedIn',true);
+              this.loggedIn = this.bg.getLocalStorage('loggedIn');
+              this.inputIsLoading = false;
+            }, 1000)
           }else{
-            // not logged in add further logic
+            this.inputIsLoading = false;
+            this.inputHasError = true;
           }
         } ).catch((e) => {
          if(e){
-           this.loggedIn = false;
+            setTimeout(()=>{
+              this.loggedIn = false;
+              this.inputIsLoading = false;
+              this.inputHasError = true;
+            }, 1000)
          }
        })
+    },
+    logout(){
+      this.bg.removeLocalStorage('loggedIn');
+      this.loggedIn = false
     }
   },
+  created(){
+    
+  },
   beforeMount(){;
-    this.checkCredentials();
-    // this.bg.getCookies("https://*.atlassian.net","atlassian.xsrf.token",function(loggedIn){
-    //   console.log(loggedIn)
-    //   self.loggedIn = loggedIn
-    // });
   },
   mounted(){
     if(this.loggedIn){
