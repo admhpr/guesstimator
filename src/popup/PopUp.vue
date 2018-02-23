@@ -65,7 +65,7 @@
           <div class="content">
             <div class="field  has-addons has-addons-centered">
               <p :class="{'control' : true, 'has-icons-left' : true, 'is-loading' : inputIsLoading}">
-                <input v-model="baseUrl" :class="{ 'input' : true, 'is-info' : !inputHasError, 'is-danger' : inputHasError }" type="text" placeholder="Info input">
+                <input v-model="baseUrl" :class="{ 'input' : true, 'is-info' : !inputHasError, 'is-danger' : inputHasError }" type="text" placeholder="Jira Base Url">
                 <span class="icon is-small is-left">
                 <i class="fa fa-random"></i>
                 </span>
@@ -111,7 +111,7 @@ export default {
       selectedDate: 'None Set',
       deadline: '0',
       loggedIn: window.localStorage.getItem('loggedIn'),
-      baseUrl: '',
+      baseUrl: window.localStorage.getItem('baseUrl'),
       inputIsLoading: false,
       inputHasError: false,
       bg: new Background()
@@ -125,17 +125,17 @@ export default {
       this.deadline = this.selectedDate;
     },
     openDashboard(){
-      this.bg.openNewTab("./pages/options.html");  
+      this.bg.openNewTab("./pages/tab.html");  
     },
     openJiraLogin(){
       this.bg.openNewTab("https://id.atlassian.com/login");  
     },
     checkCredentials(){
         this.inputIsLoading = true;
+        this.bg.setLocalStorage('baseUrl', this.baseUrl);
         axios
         .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/configuration`)
         .then((res) => {
-          console.log(res);
           if(res.status === 200){
             console.log(res)
             setTimeout(()=>{
@@ -162,8 +162,10 @@ export default {
       this.loggedIn = false
     }
   },
+  beforeCreate(){
+  },
   created(){
-    
+    this.checkCredentials();
   },
   beforeMount(){;
   },
