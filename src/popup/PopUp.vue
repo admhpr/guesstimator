@@ -79,7 +79,7 @@
 
             <div class="field">
               <p class="control has-icons-left has-icons-right">
-                <input class="input" type="email" placeholder="Email">
+                <input v-model="credentials.email" class="input" type="email" placeholder="Email">
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
                 </span>
@@ -90,7 +90,7 @@
             </div>
             <div class="field has-addons-centered">
               <p class="control has-icons-left">
-                <input class="input" type="password" placeholder="Password">
+                <input v-model="credentials.password" class="input" type="password" placeholder="Password">
                 <span class="icon is-small is-left">
                   <i class="fas fa-lock"></i>
                 </span>
@@ -139,6 +139,10 @@ export default {
       baseUrl: window.localStorage.getItem('baseUrl'),
       inputIsLoading: false,
       inputHasError: false,
+      credentials: {
+        email: window.localStorage.getItem('email'),
+        password: ''
+      },
       bg: new Background()
 
     };
