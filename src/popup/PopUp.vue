@@ -63,6 +63,7 @@
         </header>
         <div class="card-content">
           <div class="content">
+
             <div class="field  has-addons has-addons-centered">
               <p :class="{'control' : true, 'has-icons-left' : true, 'is-loading' : inputIsLoading}">
                 <input v-model="baseUrl" :class="{ 'input' : true, 'is-info' : !inputHasError, 'is-danger' : inputHasError }" type="text" placeholder="Jira Base Url">
@@ -74,13 +75,37 @@
                 <a class="button is-info" @click="checkCredentials">Set</a>
               </div>
             </div>
+
+
+            <div class="field">
+              <p class="control has-icons-left has-icons-right">
+                <input class="input" type="email" placeholder="Email">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                  <i class="fas fa-check"></i>
+                </span>
+              </p>
+            </div>
+            <div class="field has-addons-centered">
+              <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-lock"></i>
+                </span>
+              </p>
+            </div>
+
+          
+
             <div v-show="inputHasError">
               <p class="help is-danger">Please make sure you are logged in to Jira and the url is correct</p>
-              <a @click="openJiraLogin" class="button is-medium is-link">
+              <a @click="loginToJira" class="button is-medium is-link">
                 <span class="icon">
                   <i class="fa fa-object-group"></i>
                 </span>
-                <span>Jira</span>
+                <span>Login</span>
               </a>
             </div>      
           </div>
@@ -127,6 +152,9 @@ export default {
     openDashboard(){
       this.bg.openNewTab("./pages/tab.html");  
     },
+    loginToJira(){
+      console.log('clicked');
+    },
     openJiraLogin(){
       this.bg.openNewTab("https://id.atlassian.com/login");  
     },
@@ -134,7 +162,7 @@ export default {
         this.inputIsLoading = true;
         this.bg.setLocalStorage('baseUrl', this.baseUrl);
         axios
-        .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/configuration`)
+        .get(`https://${this.baseUrl}.atlassian.net/rest/auth/1/session`)
         .then((res) => {
           if(res.status === 200){
             console.log(res)
