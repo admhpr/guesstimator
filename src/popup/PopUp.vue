@@ -163,11 +163,13 @@ export default {
       this.bg.openNewTab("https://id.atlassian.com/login");  
     },
     checkCredentials(){
-        
         this.inputIsLoading = true;
         this.bg.setLocalStorage('baseUrl', this.baseUrl);
         axios
-        .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/myself?_=${Date.now()}`, {withCredentials: true})
+        .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/myself?_=${Date.now()}`, 
+        {
+          withCredentials: true   
+        })
         .then((res) => {
           if(res.status === 200){
             console.log(res)
