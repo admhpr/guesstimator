@@ -77,8 +77,8 @@
             </div>
 
 
-            <div class="field">
-              <p class="control has-icons-left has-icons-right">
+            <!-- <div class="field"> -->
+              <!-- <p class="control has-icons-left has-icons-right">
                 <input v-model="credentials.email" class="input" type="email" placeholder="Email">
                 <span class="icon is-small is-left">
                   <i class="fas fa-envelope"></i>
@@ -95,13 +95,13 @@
                   <i class="fas fa-lock"></i>
                 </span>
               </p>
-            </div>
+            </div> -->
 
           
 
             <div v-show="inputHasError">
               <p class="help is-danger">Please make sure you are logged in to Jira and the url is correct</p>
-              <a @click="loginToJira" class="button is-medium is-link">
+              <a @click="openJiraLogin" class="button is-medium is-link">
                 <span class="icon">
                   <i class="fa fa-object-group"></i>
                 </span>
@@ -163,10 +163,11 @@ export default {
       this.bg.openNewTab("https://id.atlassian.com/login");  
     },
     checkCredentials(){
+        
         this.inputIsLoading = true;
         this.bg.setLocalStorage('baseUrl', this.baseUrl);
         axios
-        .get(`https://${this.baseUrl}.atlassian.net/rest/auth/1/session`)
+        .get(`https://${this.baseUrl}.atlassian.net/rest/api/2/myself?_=${Date.now()}`, {withCredentials: true})
         .then((res) => {
           if(res.status === 200){
             console.log(res)
@@ -198,6 +199,7 @@ export default {
   },
   created(){
     this.checkCredentials();
+    console.log(this.loggedIn)
   },
   beforeMount(){;
   },

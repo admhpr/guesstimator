@@ -6,16 +6,12 @@ function Background() {
     chrome.tabs.create({ url: newUrl });
   },
 
-  this.getCookies = function(domain, name, callback) {
-     chrome.cookies.getAll({ url: domain, name : name }, function(cookie) {
-        let loggedIn = false;
-        console.log(cookie)
-        cookie.length ? loggedIn = true : loggedIn = false;
-
-        if( callback ){
-          return callback( loggedIn )
-        }
-      });
+  this.getCookies = function(domain, callback) {
+     chrome.cookies.getAll({ url: domain }, function(cookie) {
+       if (callback) {
+         callback(cookie);
+       }
+     });
   },
 
   this.getLocalStorage = function(key){
